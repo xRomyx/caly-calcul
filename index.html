@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Les Calculs de Caly 🦄</title>
+  <title>Les Jeux de Caly 🦄</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
 
@@ -155,15 +155,8 @@
     .question-mark { color: var(--yellow); animation: pulse 0.8s ease-in-out infinite alternate; }
     @keyframes pulse { to { text-shadow: 0 0 20px var(--yellow); } }
 
-    .answer-row {
-      display: flex;
-      gap: 12px;
-      width: 100%;
-      max-width: 300px;
-    }
-
     #answer-input {
-      flex: 1;
+      width: 100%;
       background: rgba(255,255,255,0.1);
       border: 2px solid rgba(255,255,255,0.25);
       border-radius: var(--radius);
@@ -188,22 +181,7 @@
       80%     { transform: translateX(6px); }
     }
 
-    .validate-btn {
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      border: none; border-radius: var(--radius);
-      color: white; font-family: 'Nunito', sans-serif;
-      font-size: 1.5rem; font-weight: 900;
-      width: 60px; height: 60px;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: transform 0.15s, box-shadow 0.15s;
-      box-shadow: 0 4px 16px rgba(179,107,255,0.4);
-      flex-shrink: 0;
-    }
-    .validate-btn:hover  { transform: scale(1.1); }
-    .validate-btn:active { transform: scale(0.93); }
-
-    #feedback {
+#feedback {
       font-size: 1.4rem;
       font-weight: 900;
       min-height: 40px;
@@ -235,8 +213,8 @@
     }
     .key:hover  { background: rgba(255,255,255,0.18); }
     .key:active { transform: scale(0.9); }
-    .key.zero { grid-column: span 2; }
-    .key.del  { background: rgba(255,107,179,0.15); border-color: rgba(255,107,179,0.3); }
+    .key.del { background: rgba(255,107,179,0.15); border-color: rgba(255,107,179,0.3); }
+    .key.ok  { background: linear-gradient(135deg, var(--green), #00b87a); color: #003322; border: none; font-size: 1.3rem; font-weight: 900; }
 
     .back-btn {
       background: rgba(255,255,255,0.08);
@@ -254,14 +232,16 @@
 
     .dots { display: flex; gap: 8px; }
     .dot {
-      width: 12px; height: 12px;
+      width: 22px; height: 22px;
       border-radius: 50%;
       background: rgba(255,255,255,0.15);
       transition: background 0.3s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.75rem; font-weight: 900; color: transparent;
     }
-    .dot.done    { background: var(--green); }
+    .dot.done    { background: var(--green);  color: #003322; }
     .dot.current { background: var(--yellow); }
-    .dot.wrong-d { background: var(--pink); }
+    .dot.wrong-d { background: var(--pink);   }
 
     .result-emoji { font-size: 5rem; animation: bounceIn 0.6s cubic-bezier(0.36,0.07,0.19,0.97); }
     @keyframes bounceIn {
@@ -277,8 +257,16 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .result-score { font-size: 1.2rem; color: rgba(255,255,255,0.8); text-align: center; }
-    .star-row { font-size: 2.5rem; letter-spacing: 4px; }
+    .result-score { font-size: 1.1rem; color: rgba(255,255,255,0.6); text-align: center; }
+    .star-row {
+      font-size: 4rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      background: linear-gradient(135deg, var(--yellow), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(255,224,102,0.5));
+    }
 
     .replay-btn {
       background: linear-gradient(135deg, var(--green), #00b87a);
@@ -305,6 +293,170 @@
     @keyframes confetti-fall {
       to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
     }
+
+    /* ===== LECTURE ===== */
+    .op-btn.lec { background: linear-gradient(135deg, #ffb347, #ffdd88); color: #4a2800; }
+
+    .lecture-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      backdrop-filter: blur(8px);
+    }
+
+    .lecture-legende {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      flex-wrap: wrap;
+    }
+    .lecture-legende span { display: flex; align-items: center; gap: 8px; }
+    .leg-arc {
+      display: inline-block;
+      width: 30px; height: 10px;
+      border: 2.5px solid var(--pink);
+      border-top: none;
+      border-radius: 0 0 15px 15px;
+    }
+    .leg-muette {
+      display: inline-block;
+      width: 18px; height: 18px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 4px;
+      position: relative;
+    }
+    .leg-muette::after {
+      content: '';
+      position: absolute;
+      top: 46%; left: 1px; right: 1px;
+      height: 2.5px;
+      background: rgba(255,107,179,0.9);
+      border-radius: 2px;
+    }
+
+    .mot-display {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      flex-wrap: wrap;
+      min-height: 90px;
+      animation: slideInMot 0.35s ease;
+    }
+    @keyframes slideInMot {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .lettre {
+      display: inline-flex;
+      align-items: flex-end;
+      justify-content: center;
+      font-size: clamp(2.6rem, 9vw, 4rem);
+      font-weight: 900;
+      color: white;
+      position: relative;
+      padding: 0 2px 22px;
+      line-height: 1;
+    }
+    /* Couleurs par syllabe */
+    .lettre.s1 { color: var(--pink); }
+    .lettre.s2 { color: var(--blue); }
+    .lettre.s3 { color: var(--yellow); }
+    /* Arcs de la même couleur que la syllabe */
+    .lettre.arc::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 1px; right: 1px;
+      height: 13px;
+      border: 3px solid currentColor;
+      border-top: none;
+      border-radius: 0 0 50px 50px;
+    }
+    /* Lettre muette : juste grisée */
+    .lettre.muette { color: rgba(255,255,255,0.28) !important; }
+
+    .lecture-tip {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      line-height: 1.6;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
+      width: 100%;
+    }
+
+    .lec-progress { font-size: 1rem; color: rgba(255,255,255,0.5); font-weight: 700; }
+
+    .lu-btn {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border: none; border-radius: var(--radius);
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.3rem; font-weight: 900;
+      padding: 16px 40px;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      box-shadow: 0 6px 20px rgba(179,107,255,0.4);
+    }
+    .lu-btn:hover  { transform: translateY(-2px) scale(1.03); }
+    .lu-btn:active { transform: scale(0.97); }
+
+    .listen-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 50px;
+      color: rgba(255,255,255,0.75);
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      padding: 10px 28px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .listen-btn:hover  { background: rgba(255,255,255,0.18); color: white; }
+    .listen-btn:active { transform: scale(0.94); }
+
+    /* ===== MODE EXERCICE ===== */
+    .op-btn.exo { background: linear-gradient(135deg, #6bff9e, #00e57a); color: #003320; }
+
+    .exo-question {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 700;
+      text-align: center;
+    }
+    /* Lettre blanche pour masquer les couleurs dans l'exercice */
+    .lettre.s0 { color: white; }
+    .exo-btns { display: flex; gap: 16px; justify-content: center; }
+    .exo-btn {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.25);
+      border-radius: 20px;
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      width: 72px; height: 72px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .exo-btn:hover  { background: rgba(255,255,255,0.2); transform: scale(1.05); }
+    .exo-btn:active { transform: scale(0.92); }
+    .exo-btn.correct { background: var(--green); border-color: var(--green); color: #003322; }
+    .exo-btn.wrong   { background: var(--pink);  border-color: var(--pink);  color: white; }
+    .exo-btn:disabled { cursor: default; }
+    .lecture-tip.correct { color: var(--green); font-weight: 900; }
+    .lecture-tip.wrong   { color: var(--pink);  font-weight: 900; }
   </style>
 </head>
 <body>
@@ -322,8 +474,8 @@
 
   <!-- Écran 1 : Accueil -->
   <div id="home-screen" class="screen active">
-    <div class="title">Les Calculs<br>de Caly 🦄</div>
-    <div class="subtitle">Choisis une opération ✨</div>
+    <div class="title">Les Jeux<br>de Caly 🦄</div>
+    <div class="subtitle">Choisis une activité ✨</div>
     <div class="btn-group">
       <button class="op-btn add" onclick="startGame('add')">
         <span class="op-icon">🌸</span>
@@ -340,6 +492,16 @@
         <span class="op-label">Multiplication</span>
         <span class="op-sym">×</span>
       </button>
+      <button class="op-btn lec" onclick="startLecture()">
+        <span class="op-icon">📖</span>
+        <span class="op-label">Lecture</span>
+        <span class="op-sym">A</span>
+      </button>
+      <button class="op-btn exo" onclick="startExercice()">
+        <span class="op-icon">🎯</span>
+        <span class="op-label">Exercice syllabes</span>
+        <span class="op-sym">?</span>
+      </button>
     </div>
   </div>
 
@@ -347,17 +509,14 @@
   <div id="game-screen" class="screen">
     <div class="score-bar">
       <button class="back-btn" onclick="goHome()">← Retour</button>
-      <div id="score-stars" class="stars">⭐ 0</div>
+      <div id="score-stars" class="stars">Score : 0</div>
     </div>
     <div class="dots" id="progress-dots"></div>
     <div class="problem-card">
       <div id="op-badge" class="op-badge"></div>
       <div id="problem-text" class="problem-text"></div>
       <div id="feedback"></div>
-      <div class="answer-row">
-        <input id="answer-input" type="number" inputmode="numeric" placeholder="?" autocomplete="off" />
-        <button class="validate-btn" onclick="checkAnswer()">✓</button>
-      </div>
+      <input id="answer-input" type="number" inputmode="numeric" placeholder="?" autocomplete="off" />
       <div class="keypad">
         <button class="key" onclick="keyPress('7')">7</button>
         <button class="key" onclick="keyPress('8')">8</button>
@@ -368,8 +527,47 @@
         <button class="key" onclick="keyPress('1')">1</button>
         <button class="key" onclick="keyPress('2')">2</button>
         <button class="key" onclick="keyPress('3')">3</button>
-        <button class="key zero" onclick="keyPress('0')">0</button>
-        <button class="key del"  onclick="keyDel()">⌫</button>
+        <button class="key" onclick="keyPress('0')">0</button>
+        <button class="key del" onclick="keyDel()">⌫</button>
+        <button class="key ok"  onclick="checkAnswer()">✓</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Écran 4 : Lecture -->
+  <div id="lecture-screen" class="screen">
+    <div class="score-bar">
+      <button class="back-btn" onclick="goHome()">← Retour</button>
+      <div id="lec-progress" class="lec-progress">Mot 1 / 25</div>
+    </div>
+    <div class="lecture-card">
+      <div class="lecture-legende">
+        <span><b style="color:var(--pink)">rose</b> / <b style="color:var(--blue)">bleu</b> = une syllabe</span>
+        <span><span class="leg-arc"></span> un seul son</span>
+        <span><span class="leg-muette"></span> lettre muette</span>
+      </div>
+      <div id="mot-display" class="mot-display"></div>
+      <button class="listen-btn" onclick="ecouterMot()">🔊 Écouter</button>
+      <div id="lecture-tip" class="lecture-tip"></div>
+      <button class="lu-btn" id="lu-btn" onclick="nextMot()">Lu ! →</button>
+    </div>
+  </div>
+
+  <!-- Écran 5 : Exercice Syllabes -->
+  <div id="exercice-screen" class="screen">
+    <div class="score-bar">
+      <button class="back-btn" onclick="goHome()">← Retour</button>
+      <div id="exo-score" class="lec-progress">Score : 0</div>
+    </div>
+    <div class="dots" id="exo-dots"></div>
+    <div class="lecture-card">
+      <div class="exo-question">Combien de syllabes ? 🔤</div>
+      <div id="exo-mot" class="mot-display"></div>
+      <div id="exo-feedback" class="lecture-tip" style="min-height:52px;text-align:center"></div>
+      <div class="exo-btns">
+        <button class="exo-btn" onclick="repondre(1)">1</button>
+        <button class="exo-btn" onclick="repondre(2)">2</button>
+        <button class="exo-btn" onclick="repondre(3)">3</button>
       </div>
     </div>
   </div>
@@ -397,10 +595,9 @@
     starsEl.appendChild(s);
   }
 
-  const TOTAL   = 10;
-  const MAX_NUM = 20;
-  const MUL_MAX = 10;
-  const MUL_B   = 5;
+  const TOTAL    = 10;
+  const ADD_MAX  = 20;  // additions jusqu'à 20+20
+  const SUB_MAX  = 10;  // soustractions dans les 10
 
   let currentOp = '';
   let questions = [];
@@ -413,13 +610,14 @@
   function genQuestion(op) {
     let a, b, answer, sym;
     if (op === 'add') {
-      do { a = rand(1, MAX_NUM); b = rand(1, MAX_NUM); } while (a + b > MAX_NUM);
+      a = rand(1, ADD_MAX); b = rand(1, ADD_MAX);
       answer = a + b; sym = '+';
     } else if (op === 'sub') {
-      a = rand(1, MAX_NUM); b = rand(0, a);
+      a = rand(1, SUB_MAX); b = rand(0, a);
       answer = a - b; sym = '−';
     } else {
-      a = rand(1, MUL_MAX); b = rand(1, MUL_B);
+      a = rand(1, 9);
+      b = 10;
       answer = a * b; sym = '×';
     }
     return { a, b, answer, sym };
@@ -458,7 +656,7 @@
 
   function keyPress(digit) {
     const inp = document.getElementById('answer-input');
-    if (inp.disabled || inp.value.length >= 3) return;
+    if (inp.disabled || inp.value.length >= 4) return;
     inp.value += digit;
   }
   function keyDel() {
@@ -478,14 +676,17 @@
       inp.classList.add('correct');
       score++;
       answered[current] = 'correct';
-      fb.textContent = pick(['Bravo ! 🌟', 'Super ! ✨', 'Excellent ! 🦄', 'Parfait ! 🎉', 'Génial ! 💫']);
+      const msg = pick(['Bravo !', 'Super !', 'Excellent !', 'Parfait !', 'Génial !']);
+      fb.textContent = msg + ' 🌟';
       fb.className = 'correct';
       confetti();
+      speak(msg);
     } else {
       inp.classList.add('wrong');
       answered[current] = 'wrong';
       fb.textContent = `Presque... La réponse était ${q.answer} 💜`;
       fb.className = 'wrong';
+      speak('Presque. La réponse était ' + q.answer);
     }
 
     renderDots();
@@ -507,32 +708,37 @@
         (answered[i] === 'correct' ? ' done'    :
          answered[i] === 'wrong'   ? ' wrong-d' :
          i === current             ? ' current' : '');
+      if (answered[i] === 'correct') d.textContent = '✓';
       el.appendChild(d);
     }
   }
 
   function updateScore() {
-    document.getElementById('score-stars').textContent = `⭐ ${score}`;
+    document.getElementById('score-stars').textContent = `Score : ${score}`;
   }
 
   function showResult() {
     showScreen('result-screen');
     const pct = score / TOTAL;
-    let emoji, title, stars;
-    if (pct === 1)       { emoji = '🏆'; title = 'PARFAIT ! Caly est une championne !'; stars = '⭐⭐⭐'; }
-    else if (pct >= 0.8) { emoji = '🦄'; title = 'Excellent travail, Caly !';           stars = '⭐⭐⭐'; }
-    else if (pct >= 0.6) { emoji = '🌟'; title = 'Très bien, continue comme ça !';       stars = '⭐⭐'; }
-    else if (pct >= 0.4) { emoji = '💪'; title = 'Bon effort, tu progresses !';          stars = '⭐'; }
-    else                  { emoji = '💜'; title = 'Pratique encore, tu vas y arriver !';  stars = ''; }
+    let emoji, title, sub;
+    if (pct === 1)       { emoji = '🏆'; title = 'PARFAIT ! Caly est une championne !'; sub = 'Score parfait ! Incroyable ! 🎉'; }
+    else if (pct >= 0.8) { emoji = '🦄'; title = 'Excellent travail, Caly !';           sub = 'Encore un peu et tu auras tout juste !'; }
+    else if (pct >= 0.6) { emoji = '🌟'; title = 'Très bien, continue comme ça !';       sub = 'Tu progresses super bien !'; }
+    else if (pct >= 0.4) { emoji = '💪'; title = 'Bon effort, tu progresses !';          sub = 'Rejoue pour t\'améliorer !'; }
+    else                  { emoji = '💜'; title = 'Pratique encore, tu vas y arriver !';  sub = 'Chaque essai compte !'; }
     document.getElementById('result-emoji').textContent = emoji;
     document.getElementById('result-title').textContent  = title;
-    document.getElementById('star-row').textContent      = stars;
-    document.getElementById('result-score').textContent  =
-      `${score} bonne${score>1?'s':''} réponse${score>1?'s':''} sur ${TOTAL}`;
+    document.getElementById('star-row').textContent      = score + ' / ' + TOTAL;
+    document.getElementById('result-score').textContent  = sub;
     if (pct >= 0.8) confetti(80);
+    setTimeout(function() { speak(title + '. ' + sub); }, 600);
   }
 
-  function replay()  { startGame(currentOp); }
+  function replay() {
+    if      (currentOp === 'exo') startExercice();
+    else if (currentOp === 'lec') startLecture();
+    else                          startGame(currentOp);
+  }
   function goHome()  { showScreen('home-screen'); }
 
   function showScreen(id) {
@@ -541,6 +747,425 @@
   }
 
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  // ===== VOIX =====
+  function speak(text, rate) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    // Supprime les emojis pour une lecture propre
+    var clean = text.replace(/[\u{1F000}-\u{1FFFF}]|[\u{2600}-\u{27BF}]/gu, '').trim();
+    var utt   = new SpeechSynthesisUtterance(clean);
+    utt.lang  = 'fr-FR';
+    utt.rate  = rate  || 0.88;
+    utt.pitch = 1.1;
+    window.speechSynthesis.speak(utt);
+  }
+
+  // ===== LECTURE =====
+  // s = syllabe (1=rose, 2=bleu, 3=jaune), a = arc, m = muette
+  const MOTS = [
+    {p:[{l:"ch",a:1,s:1},{l:"a",s:1},{l:"t",m:1,s:1}],                                     i:'"ch" = un seul son. Le "t" final ne se prononce pas.'},
+    {p:[{l:"ch",a:1,s:1},{l:"i",s:1},{l:"en",a:1,s:1}],                                    i:'"ch" et "en" font chacun un seul son.'},
+    {p:[{l:"ch",a:1,s:1},{l:"a",s:1},{l:"p",s:2},{l:"eau",a:1,s:2}],                       i:'"ch" et "eau" font chacun un seul son.'},
+    {p:[{l:"b",s:1},{l:"a",s:1},{l:"t",s:2},{l:"eau",a:1,s:2}],                            i:'"eau" se prononce "o".'},
+    {p:[{l:"g",s:1},{l:"â",s:1},{l:"t",s:2},{l:"eau",a:1,s:2}],                            i:'"eau" se prononce "o".'},
+    {p:[{l:"m",s:1},{l:"ou",a:1,s:1},{l:"t",s:2},{l:"on",a:1,s:2}],                        i:'"ou" et "on" font chacun un seul son.'},
+    {p:[{l:"h",m:1,s:1},{l:"i",s:1},{l:"b",s:2},{l:"ou",a:1,s:2}],                         i:'Le "h" est muet. "ou" fait un seul son.'},
+    {p:[{l:"l",s:1},{l:"ou",a:1,s:1},{l:"p",m:1,s:1}],                                     i:'"ou" fait un seul son. Le "p" final est muet.'},
+    {p:[{l:"l",s:1},{l:"a",s:1},{l:"p",s:2},{l:"in",a:1,s:2}],                             i:'"in" fait un son du nez.'},
+    {p:[{l:"m",s:1},{l:"a",s:1},{l:"m",s:2},{l:"an",a:1,s:2}],                             i:'"an" fait un son du nez.'},
+    {p:[{l:"en",a:1,s:1},{l:"f",s:2},{l:"an",a:1,s:2},{l:"t",m:1,s:2}],                    i:'"en" et "an" sont des sons du nez. Le "t" est muet.'},
+    {p:[{l:"b",s:1},{l:"on",a:1,s:1},{l:"b",s:2},{l:"on",a:1,s:2}],                        i:'"on" fait un son du nez.'},
+    {p:[{l:"m",s:1},{l:"ai",a:1,s:1},{l:"s",s:2},{l:"on",a:1,s:2}],                        i:'"ai" se prononce "è". "on" fait un son du nez.'},
+    {p:[{l:"p",s:1},{l:"oi",a:1,s:1},{l:"ss",s:2},{l:"on",a:1,s:2}],                       i:'"oi" et "on" font chacun un seul son.'},
+    {p:[{l:"v",s:1},{l:"oi",a:1,s:1},{l:"t",s:2},{l:"u",s:2},{l:"r",s:2},{l:"e",m:1,s:2}],i:'"oi" fait un seul son. Le "e" final ne se prononce pas.'},
+    {p:[{l:"p",s:1},{l:"a",s:1},{l:"p",s:2},{l:"ill",a:1,s:2},{l:"on",a:1,s:3}],           i:'"ill" se prononce "y". "on" fait un son du nez.'},
+    {p:[{l:"f",s:1},{l:"ill",a:1,s:1},{l:"e",m:1,s:1}],                                    i:'"ill" se prononce "y". Le "e" final est muet.'},
+    {p:[{l:"s",s:1},{l:"o",s:1},{l:"l",s:2},{l:"eil",a:1,s:2}],                            i:'"eil" fait un seul son.'},
+    {p:[{l:"c",s:1},{l:"a",s:1},{l:"n",s:2},{l:"a",s:2},{l:"r",s:2},{l:"d",m:1,s:2}],     i:'Le "d" final est muet.'},
+    {p:[{l:"s",s:1},{l:"ou",a:1,s:1},{l:"r",s:2},{l:"i",s:2},{l:"s",m:1,s:2}],            i:'"ou" fait un seul son. Le "s" final est muet.'},
+    {p:[{l:"b",s:1},{l:"oi",a:1,s:1},{l:"s",m:1,s:1}],                                    i:'"oi" fait un seul son. Le "s" final est muet.'},
+    {p:[{l:"n",s:1},{l:"ui",a:1,s:1},{l:"t",m:1,s:1}],                                    i:'"ui" fait un seul son. Le "t" final est muet.'},
+    {p:[{l:"g",s:1},{l:"e",s:1},{l:"n",s:2},{l:"ou",a:1,s:2}],                             i:'"ou" fait un seul son.'},
+    {p:[{l:"f",s:1},{l:"l",s:1},{l:"eu",a:1,s:1},{l:"r",s:1}],                             i:'"eu" fait un seul son.'},
+    {p:[{l:"bl",s:1},{l:"eu",a:1,s:1}],                                                    i:'"eu" fait un seul son.'},
+    // ph
+    {p:[{l:"é",s:1},{l:"l",s:2},{l:"é",s:2},{l:"ph",a:1,s:3},{l:"an",a:1,s:3},{l:"t",m:1,s:3}], i:'"ph" se prononce "f". "an" fait un son du nez. Le "t" est muet.'},
+    {p:[{l:"d",s:1},{l:"au",a:1,s:1},{l:"ph",a:1,s:2},{l:"in",a:1,s:2}],                  i:'"au" = un son. "ph" se prononce "f". "in" fait un son du nez.'},
+    // gn
+    {p:[{l:"ch",a:1,s:1},{l:"an",a:1,s:1},{l:"p",s:2},{l:"i",s:2},{l:"gn",a:1,s:3},{l:"on",a:1,s:3}], i:'"gn" fait un son special. "an" et "on" sont des sons du nez.'},
+    {p:[{l:"m",s:1},{l:"on",a:1,s:1},{l:"t",s:2},{l:"a",s:2},{l:"gn",a:1,s:2},{l:"e",m:1,s:2}], i:'"on" fait un son du nez. "gn" fait un son special. Le "e" est muet.'},
+    // un
+    {p:[{l:"l",s:1},{l:"un",a:1,s:1},{l:"d",s:2},{l:"i",s:2}],                            i:'"un" fait un son du nez.'},
+    // au
+    {p:[{l:"ch",a:1,s:1},{l:"au",a:1,s:1},{l:"d",m:1,s:1}],                               i:'"ch" et "au" font chacun un son. Le "d" final est muet.'},
+    {p:[{l:"f",s:1},{l:"au",a:1,s:1},{l:"t",s:2},{l:"eu",a:1,s:2},{l:"ill",a:1,s:2}],     i:'"au", "eu" et "ill" font chacun un seul son.'},
+    // oi + muettes
+    {p:[{l:"é",s:1},{l:"t",s:2},{l:"oi",a:1,s:2},{l:"l",s:2},{l:"e",m:1,s:2}],            i:'"oi" fait un seul son. Le "e" final est muet.'},
+    {p:[{l:"d",s:1},{l:"oi",a:1,s:1},{l:"g",m:1,s:1},{l:"t",m:1,s:1}],                    i:'"oi" fait un seul son. Le "g" et le "t" sont muets.'},
+    {p:[{l:"cr",s:1},{l:"oi",a:1,s:1},{l:"x",m:1,s:1}],                                   i:'"oi" fait un seul son. Le "x" final est muet.'},
+    // ou + eu
+    {p:[{l:"c",s:1},{l:"ou",a:1,s:1},{l:"l",s:2},{l:"eu",a:1,s:2},{l:"r",s:2}],           i:'"ou" et "eu" font chacun un seul son.'},
+    // muettes variees
+    {p:[{l:"n",s:1},{l:"e",s:1},{l:"z",m:1,s:1}],                                          i:'Le "z" final est muet.'},
+    {p:[{l:"t",s:1},{l:"em",a:1,s:1},{l:"p",m:1,s:1},{l:"s",m:1,s:1}],                    i:'"em" fait un son du nez. Le "p" et le "s" sont muets.'},
+    // groupes complexes
+    {p:[{l:"gr",s:1},{l:"e",s:1},{l:"n",s:2},{l:"ou",a:1,s:2},{l:"ill",a:1,s:2},{l:"e",m:1,s:2}], i:'"ou" et "ill" font chacun un son. Le "e" final est muet.'},
+    {p:[{l:"oi",a:1,s:1},{l:"s",s:2},{l:"eau",a:1,s:2}],                                   i:'"oi" et "eau" font chacun un seul son.'},
+    // Jours de la semaine
+    {p:[{l:"m",s:1},{l:"a",s:1},{l:"r",s:1},{l:"d",s:2},{l:"i",s:2}],                      i:'2 syllabes : mar · di.'},
+    {p:[{l:"m",s:1},{l:"e",s:1},{l:"r",s:1},{l:"cr",s:2},{l:"e",s:2},{l:"d",s:3},{l:"i",s:3}], i:'3 syllabes : mer · cre · di.'},
+    {p:[{l:"j",s:1},{l:"eu",a:1,s:1},{l:"d",s:2},{l:"i",s:2}],                             i:'"eu" fait un seul son.'},
+    {p:[{l:"v",s:1},{l:"en",a:1,s:1},{l:"d",s:2},{l:"r",s:2},{l:"e",s:2},{l:"d",s:3},{l:"i",s:3}], i:'"en" fait un son du nez. 3 syllabes : ven · dre · di.'},
+    {p:[{l:"s",s:1},{l:"a",s:1},{l:"m",s:2},{l:"e",s:2},{l:"d",s:3},{l:"i",s:3}],          i:'3 syllabes : sa · me · di.'},
+    {p:[{l:"d",s:1},{l:"i",s:1},{l:"m",s:2},{l:"an",a:1,s:2},{l:"ch",a:1,s:3},{l:"e",m:1,s:3}], i:'"an" fait un son du nez. "ch" fait un seul son. Le "e" est muet.'},
+    // Mots du quotidien
+    {p:[{l:"p",s:1},{l:"o",s:1},{l:"r",s:1},{l:"t",s:2},{l:"e",m:1,s:2}],                  i:'Le "e" final est muet.'},
+    {p:[{l:"s",s:1},{l:"oeu",a:1,s:1},{l:"r",s:1}],                                         i:'"oeu" fait un seul son, comme "eu".'},
+    {p:[{l:"p",s:1},{l:"a",s:1},{l:"p",s:2},{l:"a",s:2}],                                   i:'2 syllabes : pa · pa.'},
+    {p:[{l:"p",s:1},{l:"è",s:1},{l:"r",s:2},{l:"e",m:1,s:2}],                               i:'Le "e" final est muet.'},
+    {p:[{l:"fr",s:1},{l:"è",s:1},{l:"r",s:2},{l:"e",m:1,s:2}],                              i:'Le "e" final est muet.'},
+    {p:[{l:"t",s:1},{l:"a",s:1},{l:"bl",s:2},{l:"e",m:1,s:2}],                              i:'Le "e" final est muet.'},
+    {p:[{l:"é",s:1},{l:"c",s:2},{l:"o",s:2},{l:"l",s:2},{l:"e",m:1,s:2}],                  i:'Le "e" final est muet.'},
+    {p:[{l:"ch",a:1,s:1},{l:"am",a:1,s:1},{l:"br",s:2},{l:"e",m:1,s:2}],                   i:'"ch" fait un seul son. "am" fait un son du nez. Le "e" est muet.'},
+    {p:[{l:"c",s:1},{l:"ui",a:1,s:1},{l:"s",s:2},{l:"i",s:2},{l:"n",s:2},{l:"e",m:1,s:2}], i:'"ui" fait un seul son. Le "e" final est muet.'},
+    {p:[{l:"s",s:1},{l:"a",s:1},{l:"l",s:2},{l:"on",a:1,s:2}],                              i:'"on" fait un son du nez.'},
+    {p:[{l:"l",s:1},{l:"i",s:1},{l:"t",m:1,s:1}],                                           i:'Le "t" final est muet.'},
+    {p:[{l:"p",s:1},{l:"ain",a:1,s:1}],                                                      i:'"ain" fait un son du nez.'},
+    {p:[{l:"l",s:1},{l:"ai",a:1,s:1},{l:"t",m:1,s:1}],                                     i:'"ai" se prononce "è". Le "t" est muet.'},
+    {p:[{l:"j",s:1},{l:"a",s:1},{l:"r",s:1},{l:"d",s:2},{l:"in",a:1,s:2}],                 i:'"in" fait un son du nez.'},
+    {p:[{l:"l",s:1},{l:"i",s:1},{l:"vr",s:2},{l:"e",m:1,s:2}],                             i:'Le "e" final est muet.'},
+    {p:[{l:"cr",s:1},{l:"a",s:1},{l:"y",s:2},{l:"on",a:1,s:2}],                             i:'"on" fait un son du nez.'},
+    {p:[{l:"c",s:1},{l:"a",s:1},{l:"h",m:1,s:2},{l:"i",s:2},{l:"er",a:1,s:2}],             i:'Le "h" est muet. "er" se prononce "é".'},
+    {p:[{l:"eau",a:1,s:1}],                                                                  i:'"eau" se prononce "o".'},
+    {p:[{l:"b",s:1},{l:"eu",a:1,s:1},{l:"rr",s:1},{l:"e",m:1,s:1}],                        i:'"eu" fait un seul son. Le "e" final est muet.'},
+    // Animaux
+    {p:[{l:"c",s:1},{l:"o",s:1},{l:"ch",a:1,s:2},{l:"on",a:1,s:2}],                        i:'"ch" et "on" font chacun un seul son.'},
+    {p:[{l:"v",s:1},{l:"a",s:1},{l:"ch",a:1,s:2},{l:"e",m:1,s:2}],                         i:'"ch" fait un seul son. Le "e" est muet.'},
+    {p:[{l:"ch",a:1,s:1},{l:"e",s:1},{l:"v",s:2},{l:"a",s:2},{l:"l",s:2}],                 i:'"ch" fait un seul son.'},
+    {p:[{l:"s",s:1},{l:"er",s:1},{l:"p",s:2},{l:"en",a:1,s:2},{l:"t",m:1,s:2}],            i:'"en" fait un son du nez. Le "t" est muet.'},
+    {p:[{l:"r",s:1},{l:"e",s:1},{l:"n",s:2},{l:"a",s:2},{l:"r",s:2},{l:"d",m:1,s:2}],     i:'Le "d" final est muet.'},
+    // Couleurs
+    {p:[{l:"r",s:1},{l:"ou",a:1,s:1},{l:"g",s:1},{l:"e",m:1,s:1}],                         i:'"ou" fait un seul son. Le "e" est muet.'},
+    {p:[{l:"v",s:1},{l:"er",s:1},{l:"t",m:1,s:1}],                                          i:'Le "t" final est muet.'},
+    {p:[{l:"j",s:1},{l:"au",a:1,s:1},{l:"n",s:2},{l:"e",m:1,s:2}],                         i:'"au" fait un seul son. Le "e" est muet.'},
+    {p:[{l:"n",s:1},{l:"oi",a:1,s:1},{l:"r",s:1}],                                          i:'"oi" fait un seul son.'},
+    {p:[{l:"bl",s:1},{l:"an",a:1,s:1},{l:"c",m:1,s:1}],                                     i:'"an" fait un son du nez. Le "c" est muet.'},
+    {p:[{l:"gr",s:1},{l:"i",s:1},{l:"s",m:1,s:1}],                                          i:'Le "s" final est muet.'},
+    {p:[{l:"o",s:1},{l:"r",s:2},{l:"an",a:1,s:2},{l:"g",s:3},{l:"e",m:1,s:3}],             i:'"an" fait un son du nez. Le "e" est muet.'},
+    // Corps
+    {p:[{l:"t",s:1},{l:"ê",s:1},{l:"t",s:2},{l:"e",m:1,s:2}],                              i:'Le "e" final est muet.'},
+    {p:[{l:"m",s:1},{l:"ain",a:1,s:1}],                                                      i:'"ain" fait un son du nez.'},
+    {p:[{l:"y",s:1},{l:"eu",a:1,s:1},{l:"x",m:1,s:1}],                                     i:'"eu" fait un seul son. Le "x" est muet.'},
+    {p:[{l:"b",s:1},{l:"ou",a:1,s:1},{l:"ch",a:1,s:2},{l:"e",m:1,s:2}],                    i:'"ou" et "ch" font chacun un son. Le "e" est muet.'},
+    {p:[{l:"br",s:1},{l:"a",s:1},{l:"s",m:1,s:1}],                                          i:'Le "s" final est muet.'},
+    {p:[{l:"d",s:1},{l:"o",s:1},{l:"s",m:1,s:1}],                                           i:'Le "s" final est muet.'},
+    // Nourriture
+    {p:[{l:"p",s:1},{l:"o",s:1},{l:"mm",s:2},{l:"e",m:1,s:2}],                              i:'Le "e" final est muet.'},
+    {p:[{l:"fr",s:1},{l:"ai",a:1,s:1},{l:"s",s:2},{l:"e",m:1,s:2}],                        i:'"ai" se prononce "è". Le "e" est muet.'},
+    {p:[{l:"ch",a:1,s:1},{l:"o",s:1},{l:"c",s:2},{l:"o",s:2},{l:"l",s:3},{l:"a",s:3},{l:"t",m:1,s:3}], i:'"ch" fait un seul son. Le "t" est muet.'},
+    {p:[{l:"s",s:1},{l:"u",s:1},{l:"r",s:2},{l:"i",s:2},{l:"m",s:3},{l:"i",s:3}],          i:'3 syllabes : su · ri · mi.'},
+    // Nature
+    {p:[{l:"l",s:1},{l:"u",s:1},{l:"n",s:2},{l:"e",m:1,s:2}],                              i:'Le "e" final est muet.'},
+    {p:[{l:"a",s:1},{l:"r",s:1},{l:"br",s:2},{l:"e",m:1,s:2}],                             i:'Le "e" final est muet.'},
+    {p:[{l:"f",s:1},{l:"eu",a:1,s:1},{l:"ill",a:1,s:1},{l:"e",m:1,s:1}],                   i:'"eu" et "ill" font chacun un son. Le "e" est muet.'},
+    // Vetements
+    {p:[{l:"r",s:1},{l:"o",s:1},{l:"b",s:2},{l:"e",m:1,s:2}],                              i:'Le "e" final est muet.'},
+    // Mois de l'annee
+    {p:[{l:"j",s:1},{l:"an",a:1,s:1},{l:"v",s:2},{l:"i",s:2},{l:"er",a:1,s:2}],           i:'"an" fait un son du nez. "er" se prononce "e".'},
+    {p:[{l:"f",s:1},{l:"é",s:1},{l:"vr",s:2},{l:"i",s:2},{l:"er",a:1,s:2}],               i:'"er" se prononce "é".'},
+    {p:[{l:"m",s:1},{l:"a",s:1},{l:"r",s:1},{l:"s",s:1}],                                  i:'1 syllabe.'},
+    {p:[{l:"a",s:1},{l:"vr",s:2},{l:"i",s:2},{l:"l",s:2}],                                 i:'2 syllabes : a · vril.'},
+    {p:[{l:"m",s:1},{l:"ai",a:1,s:1}],                                                     i:'"ai" se prononce "e".'},
+    {p:[{l:"j",s:1},{l:"uin",a:1,s:1}],                                                    i:'"uin" fait un son du nez.'},
+    {p:[{l:"j",s:1},{l:"uill",a:1,s:1},{l:"e",s:2},{l:"t",m:1,s:2}],                      i:'"uill" fait un seul son. Le "t" est muet.'},
+    {p:[{l:"a",s:1},{l:"ou",a:1,s:1},{l:"t",m:1,s:1}],                                    i:'"ou" fait un seul son. Le "t" est muet.'},
+    {p:[{l:"s",s:1},{l:"e",s:1},{l:"p",s:1},{l:"t",s:2},{l:"em",a:1,s:2},{l:"br",s:3},{l:"e",m:1,s:3}], i:'"em" fait un son du nez. Le "e" final est muet.'},
+    {p:[{l:"o",s:1},{l:"c",s:1},{l:"t",s:2},{l:"o",s:2},{l:"br",s:3},{l:"e",m:1,s:3}],    i:'3 syllabes : oc · to · bre. Le "e" est muet.'},
+    {p:[{l:"n",s:1},{l:"o",s:1},{l:"v",s:2},{l:"em",a:1,s:2},{l:"br",s:3},{l:"e",m:1,s:3}], i:'"em" fait un son du nez. Le "e" final est muet.'},
+    {p:[{l:"d",s:1},{l:"é",s:1},{l:"c",s:2},{l:"em",a:1,s:2},{l:"br",s:3},{l:"e",m:1,s:3}], i:'"em" fait un son du nez. Le "e" final est muet.'},
+    // Chiffres en lettres
+    {p:[{l:"un",a:1,s:1}],                                                                  i:'"un" fait un son du nez.'},
+    {p:[{l:"d",s:1},{l:"eu",a:1,s:1},{l:"x",m:1,s:1}],                                    i:'"eu" fait un seul son. Le "x" est muet.'},
+    {p:[{l:"tr",s:1},{l:"oi",a:1,s:1},{l:"s",m:1,s:1}],                                   i:'"oi" fait un seul son. Le "s" est muet.'},
+    {p:[{l:"qu",a:1,s:1},{l:"a",s:1},{l:"tr",s:2},{l:"e",m:1,s:2}],                       i:'"qu" se prononce "k". Le "e" est muet.'},
+    {p:[{l:"c",s:1},{l:"in",a:1,s:1},{l:"q",s:1}],                                        i:'"in" fait un son du nez.'},
+    {p:[{l:"s",s:1},{l:"i",s:1},{l:"x",m:1,s:1}],                                         i:'Le "x" final est souvent muet.'},
+    {p:[{l:"s",s:1},{l:"e",s:1},{l:"p",m:1,s:1},{l:"t",s:1}],                             i:'Le "p" est muet dans "sept".'},
+    {p:[{l:"h",m:1,s:1},{l:"ui",a:1,s:1},{l:"t",s:1}],                                    i:'Le "h" est muet. "ui" fait un seul son.'},
+    {p:[{l:"n",s:1},{l:"eu",a:1,s:1},{l:"f",s:1}],                                        i:'"eu" fait un seul son.'},
+    {p:[{l:"d",s:1},{l:"i",s:1},{l:"x",m:1,s:1}],                                         i:'Le "x" final est muet.'},
+    {p:[{l:"on",a:1,s:1},{l:"z",s:1},{l:"e",m:1,s:1}],                                    i:'"on" fait un son du nez. Le "e" est muet.'},
+    {p:[{l:"d",s:1},{l:"ou",a:1,s:1},{l:"z",s:1},{l:"e",m:1,s:1}],                        i:'"ou" fait un seul son. Le "e" est muet.'},
+    {p:[{l:"v",s:1},{l:"in",a:1,s:1},{l:"g",m:1,s:1},{l:"t",m:1,s:1}],                   i:'"in" fait un son du nez. Le "g" et le "t" sont muets.'},
+    // Prenoms
+    {p:[{l:"C",s:1},{l:"a",s:1},{l:"l",s:2},{l:"y",s:2}],                                 i:'Le prenom de notre championne ! 🦄 2 syllabes : Ca · ly.'},
+    {p:[{l:"L",s:1},{l:"é",s:1},{l:"a",s:2}],                                              i:'2 syllabes : Lé · a.'},
+    {p:[{l:"E",s:1},{l:"m",s:1},{l:"m",s:2},{l:"a",s:2}],                                 i:'2 syllabes : Em · ma.'},
+    {p:[{l:"L",s:1},{l:"o",s:1},{l:"l",s:2},{l:"a",s:2}],                                 i:'2 syllabes : Lo · la.'},
+    {p:[{l:"J",s:1},{l:"a",s:1},{l:"d",s:2},{l:"e",m:1,s:2}],                             i:'Le "e" final est muet.'},
+    {p:[{l:"L",s:1},{l:"u",s:1},{l:"c",s:2},{l:"a",s:2},{l:"s",m:1,s:2}],                i:'Le "s" final est muet.'},
+    {p:[{l:"N",s:1},{l:"o",s:1},{l:"a",s:2},{l:"h",m:1,s:2}],                             i:'Le "h" final est muet.'},
+    {p:[{l:"Th",a:1,s:1},{l:"é",s:1},{l:"o",s:2}],                                        i:'"th" se prononce "t". 2 syllabes : Thé · o.'},
+    {p:[{l:"N",s:1},{l:"i",s:1},{l:"n",s:2},{l:"a",s:2}],                                 i:'2 syllabes : Ni · na.'},
+    {p:[{l:"L",s:1},{l:"é",s:1},{l:"o",s:2}],                                              i:'2 syllabes : Lé · o.'},
+    {p:[{l:"En",a:1,s:1},{l:"z",s:2},{l:"o",s:2}],                                        i:'"en" fait un son du nez. 2 syllabes : En · zo.'},
+    {p:[{l:"M",s:1},{l:"a",s:1},{l:"n",s:2},{l:"on",a:1,s:2}],                            i:'"on" fait un son du nez. 2 syllabes : Ma · non.'},
+    {p:[{l:"C",s:1},{l:"a",s:1},{l:"m",s:2},{l:"ill",a:1,s:2},{l:"e",m:1,s:2}],          i:'"ill" se prononce "y". Le "e" est muet.'},
+    {p:[{l:"H",m:1,s:1},{l:"u",s:1},{l:"g",s:2},{l:"o",s:2}],                             i:'Le "H" est muet. 2 syllabes : Hu · go.'},
+    {p:[{l:"Ch",a:1,s:1},{l:"a",s:1},{l:"rl",s:2},{l:"o",s:2},{l:"tt",s:2},{l:"e",m:1,s:2}], i:'"ch" fait un seul son. Le "e" est muet.'},
+    // Sons : oin, aill, pluie, ciel
+    {p:[{l:"l",s:1},{l:"oin",a:1,s:1}],                                                   i:'"oin" fait un son du nez.'},
+    {p:[{l:"p",s:1},{l:"oin",a:1,s:1},{l:"t",m:1,s:1}],                                  i:'"oin" fait un son du nez. Le "t" est muet.'},
+    {p:[{l:"p",s:1},{l:"aill",a:1,s:1},{l:"e",m:1,s:1}],                                 i:'"aill" se prononce comme "y". Le "e" est muet.'},
+    {p:[{l:"t",s:1},{l:"aill",a:1,s:1},{l:"e",m:1,s:1}],                                 i:'"aill" se prononce comme "y". Le "e" est muet.'},
+    {p:[{l:"pl",s:1},{l:"ui",a:1,s:1},{l:"e",m:1,s:1}],                                  i:'"ui" fait un seul son. Le "e" est muet.'},
+    {p:[{l:"c",s:1},{l:"i",s:1},{l:"el",s:2}],                                            i:'2 syllabes : ci · el.'},
+  ];
+
+  var lectureIdx     = 0;
+  var lectureMots    = [];
+  var SESSION_SIZE   = 8;   // mots par session
+  var SEEN_KEY       = 'caly-mots-vus';
+
+  function getSeenKeys() {
+    try { return JSON.parse(localStorage.getItem(SEEN_KEY) || '[]'); }
+    catch(e) { return []; }
+  }
+  function saveSeenKeys(keys) {
+    try { localStorage.setItem(SEEN_KEY, JSON.stringify(keys)); }
+    catch(e) {}
+  }
+  function getMotKey(mot) {
+    return mot.p.map(function(p) { return p.l; }).join('');
+  }
+
+  function buildLectureSession() {
+    var seenKeys = getSeenKeys();
+    var unseen   = MOTS.filter(function(m) { return seenKeys.indexOf(getMotKey(m)) === -1; });
+    var seen     = MOTS.filter(function(m) { return seenKeys.indexOf(getMotKey(m)) !== -1; });
+
+    // Tous les mots ont ete vus : on repart de zero
+    if (unseen.length === 0) {
+      saveSeenKeys([]);
+      unseen = MOTS.slice();
+      seen   = [];
+    }
+
+    // Melange
+    unseen = unseen.sort(function() { return Math.random() - 0.5; });
+    seen   = seen.sort(function()   { return Math.random() - 0.5; });
+
+    // Toujours 2 mots de revision si possible, reste en nouveaux
+    var revCount  = Math.min(2, seen.length);
+    var newCount  = Math.min(SESSION_SIZE - revCount, unseen.length);
+    revCount      = Math.min(SESSION_SIZE - newCount, seen.length); // ajuste si peu de nouveaux
+
+    var session = unseen.slice(0, newCount).concat(seen.slice(0, revCount));
+    return session.sort(function() { return Math.random() - 0.5; });
+  }
+
+  function startLecture() {
+    lectureMots = buildLectureSession();
+    lectureIdx  = 0;
+    showScreen('lecture-screen');
+    afficherMot();
+  }
+
+  function afficherMot() {
+    var mot      = lectureMots[lectureIdx];
+    var seenNow  = getSeenKeys().length;
+
+    document.getElementById('lec-progress').textContent =
+      'Mot ' + (lectureIdx + 1) + ' / ' + lectureMots.length + '  ·  ' + seenNow + ' / ' + MOTS.length + ' appris';
+    document.getElementById('lecture-tip').textContent  = mot.i;
+
+    const display = document.getElementById('mot-display');
+    // Reset l'animation
+    display.style.animation = 'none';
+    display.offsetHeight;
+    display.style.animation = '';
+
+    display.innerHTML = mot.p.map(function(part) {
+      var cls = 'lettre s' + (part.s || 1);
+      if (part.a) cls += ' arc';
+      if (part.m) cls += ' muette';
+      return '<span class="' + cls + '">' + part.l + '</span>';
+    }).join('');
+
+    var btn = document.getElementById('lu-btn');
+    btn.textContent = lectureIdx < lectureMots.length - 1 ? 'Lu ! →' : 'Terminé ! 🎉';
+  }
+
+  function ecouterMot() {
+    var mot    = lectureMots[lectureIdx];
+    var texte  = mot.p.map(function(p) { return p.l; }).join('');
+    speak(texte, 0.7); // lentement pour bien entendre
+  }
+
+  function nextMot() {
+    confetti(12);
+    if (lectureIdx < lectureMots.length - 1) {
+      lectureIdx++;
+      afficherMot();
+    } else {
+      // Session terminee : on marque les mots comme vus
+      var seenKeys = getSeenKeys();
+      lectureMots.forEach(function(m) {
+        var key = getMotKey(m);
+        if (seenKeys.indexOf(key) === -1) seenKeys.push(key);
+      });
+      saveSeenKeys(seenKeys);
+      var total = seenKeys.length;
+      confetti(60);
+      // Message de fin de session
+      showScreen('result-screen');
+      document.getElementById('result-emoji').textContent = total >= MOTS.length ? '🏆' : '📖';
+      document.getElementById('result-title').textContent =
+        total >= MOTS.length ? 'Tous les mots appris ! Bravo !' : 'Session terminée !';
+      document.getElementById('star-row').textContent     = total + ' / ' + MOTS.length;
+      document.getElementById('result-score').textContent = 'mots appris au total';
+      currentOp = 'lec';
+      var msg = total >= MOTS.length
+        ? 'Félicitations ! Tu as appris tous les mots !'
+        : 'Super ! Tu as appris ' + total + ' mots sur ' + MOTS.length + ' au total.';
+      setTimeout(function() { speak(msg); }, 600);
+      if (total >= MOTS.length) confetti(100);
+    }
+  }
+
+  // ===== MODE EXERCICE : Compter les syllabes =====
+  var EXO_TOTAL   = 10;
+  var exoWords    = [];
+  var exoIdx      = 0;
+  var exoScore    = 0;
+  var exoAnswered = [];
+  var exoWaiting  = false;
+
+  function getSyllabeCount(mot) {
+    return Math.max.apply(null, mot.p.map(function(p) { return p.s || 1; }));
+  }
+
+  function startExercice() {
+    exoWords    = MOTS.slice().sort(function() { return Math.random() - 0.5; }).slice(0, EXO_TOTAL);
+    exoIdx      = 0;
+    exoScore    = 0;
+    exoAnswered = Array(EXO_TOTAL).fill(null);
+    exoWaiting  = false;
+    currentOp   = 'exo';
+    showScreen('exercice-screen');
+    afficherExo();
+  }
+
+  function afficherExo() {
+    var mot     = exoWords[exoIdx];
+    var display = document.getElementById('exo-mot');
+    display.style.animation = 'none';
+    display.offsetHeight;
+    display.style.animation = '';
+    // Mot en blanc : masque les couleurs, pas d'arcs visibles
+    display.innerHTML = mot.p.map(function(p) {
+      return '<span class="lettre s0">' + p.l + '</span>';
+    }).join('');
+
+    var fb = document.getElementById('exo-feedback');
+    fb.textContent = '';
+    fb.className   = 'lecture-tip';
+    document.getElementById('exo-score').textContent = 'Score : ' + exoScore;
+
+    var btns = document.querySelectorAll('.exo-btn');
+    btns.forEach(function(b) { b.className = 'exo-btn'; b.disabled = false; });
+
+    renderExoDots();
+  }
+
+  function repondre(n) {
+    if (exoWaiting) return;
+    var mot     = exoWords[exoIdx];
+    var correct = getSyllabeCount(mot);
+    var fb      = document.getElementById('exo-feedback');
+    var btns    = document.querySelectorAll('.exo-btn');
+
+    exoWaiting = true;
+    btns.forEach(function(b) { b.disabled = true; });
+
+    btns[n - 1].classList.add(n === correct ? 'correct' : 'wrong');
+    if (n !== correct) btns[correct - 1].classList.add('correct');
+
+    if (n === correct) {
+      exoScore++;
+      exoAnswered[exoIdx] = 'correct';
+      var msg = pick(['Bravo !', 'Super !', 'Parfait !', 'Excellent !']);
+      fb.textContent = msg + ' 🌟';
+      fb.className   = 'lecture-tip correct';
+      confetti(15);
+      speak(msg);
+    } else {
+      exoAnswered[exoIdx] = 'wrong';
+      var motTexte = mot.p.map(function(p) { return p.l; }).join('');
+      fb.textContent = correct + ' syllabe' + (correct > 1 ? 's' : '') + ' → ' + motTexte;
+      fb.className   = 'lecture-tip wrong';
+      speak('Il y a ' + correct + ' syllabe' + (correct > 1 ? 's' : ''));
+    }
+
+    document.getElementById('exo-score').textContent = 'Score : ' + exoScore;
+    renderExoDots();
+
+    // Revele les couleurs apres 500ms
+    setTimeout(function() {
+      var disp = document.getElementById('exo-mot');
+      disp.innerHTML = mot.p.map(function(p) {
+        var cls = 'lettre s' + (p.s || 1);
+        if (p.a) cls += ' arc';
+        if (p.m) cls += ' muette';
+        return '<span class="' + cls + '">' + p.l + '</span>';
+      }).join('');
+    }, 500);
+
+    setTimeout(function() {
+      exoIdx++;
+      exoWaiting = false;
+      if (exoIdx < EXO_TOTAL) afficherExo();
+      else showExoResult();
+    }, 2200);
+  }
+
+  function renderExoDots() {
+    var el = document.getElementById('exo-dots');
+    el.innerHTML = '';
+    for (var i = 0; i < EXO_TOTAL; i++) {
+      var d = document.createElement('div');
+      d.className = 'dot' +
+        (exoAnswered[i] === 'correct' ? ' done'    :
+         exoAnswered[i] === 'wrong'   ? ' wrong-d' :
+         i === exoIdx                ? ' current' : '');
+      if (exoAnswered[i] === 'correct') d.textContent = '✓';
+      el.appendChild(d);
+    }
+  }
+
+  function showExoResult() {
+    showScreen('result-screen');
+    var pct = exoScore / EXO_TOTAL;
+    var emoji, title, stars;
+    if      (pct === 1)  { emoji = '🏆'; title = 'PARFAIT ! Caly est une championne !'; stars = '⭐⭐⭐'; }
+    else if (pct >= 0.8) { emoji = '🦄'; title = 'Excellent travail, Caly !';           stars = '⭐⭐⭐'; }
+    else if (pct >= 0.6) { emoji = '🌟'; title = 'Très bien, continue comme ça !';       stars = '⭐⭐'; }
+    else if (pct >= 0.4) { emoji = '💪'; title = 'Bon effort, tu progresses !';          stars = '⭐'; }
+    else                  { emoji = '💜'; title = 'Pratique encore, tu vas y arriver !';  stars = ''; }
+    var sub;
+    if      (pct === 1)  sub = 'Score parfait ! Incroyable ! 🎉';
+    else if (pct >= 0.8) sub = 'Encore un peu et tu auras tout juste !';
+    else if (pct >= 0.6) sub = 'Tu progresses super bien !';
+    else if (pct >= 0.4) sub = 'Rejoue pour t\'améliorer !';
+    else                  sub = 'Chaque essai compte !';
+    document.getElementById('result-emoji').textContent = emoji;
+    document.getElementById('result-title').textContent  = title;
+    document.getElementById('star-row').textContent      = exoScore + ' / ' + EXO_TOTAL;
+    document.getElementById('result-score').textContent  = sub;
+    if (pct >= 0.8) confetti(80);
+    setTimeout(function() { speak(title + '. ' + sub); }, 600);
+  }
 
   function confetti(n = 40) {
     const colors = ['#ff6fb3','#b36bff','#6bbfff','#ffe066','#6bffb3','#ff9de0'];
