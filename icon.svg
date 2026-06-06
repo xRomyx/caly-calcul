@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a0533"/>
+      <stop offset="100%" stop-color="#2d0a5e"/>
+    </linearGradient>
+    <linearGradient id="txt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff6fb3"/>
+      <stop offset="50%" stop-color="#b36bff"/>
+      <stop offset="100%" stop-color="#6bbfff"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="90" fill="url(#bg)"/>
+  <circle cx="370" cy="110" r="38" fill="#ff6fb3" opacity="0.7"/>
+  <circle cx="300" cy="72" r="26" fill="#b36bff" opacity="0.7"/>
+  <circle cx="420" cy="72" r="20" fill="#6bbfff" opacity="0.7"/>
+  <text x="256" y="360" font-family="Arial,sans-serif" font-size="340" font-weight="900"
+        text-anchor="middle" fill="url(#txt)">C</text>
+  <text x="256" y="455" font-family="Arial,sans-serif" font-size="80" font-weight="700"
+        text-anchor="middle" fill="#ff6fb3" letter-spacing="12">CALY</text>
+</svg>
