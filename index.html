@@ -426,6 +426,42 @@
     .listen-btn:hover  { background: rgba(255,255,255,0.18); color: white; }
     .listen-btn:active { transform: scale(0.94); }
 
+    /* ===== MOBILE ===== */
+    @media (max-width: 480px) {
+      body { padding: 10px; }
+
+      .title { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+
+      .score-bar { padding: 8px 14px; font-size: 0.9rem; }
+      .lec-progress { font-size: 0.8rem; }
+
+      .problem-card,
+      .lecture-card { padding: 18px 14px; gap: 14px; }
+
+      .problem-text { font-size: clamp(2.2rem, 10vw, 3.5rem); }
+
+      .lecture-legende {
+        font-size: 0.75rem;
+        gap: 10px;
+        justify-content: flex-start;
+      }
+
+      .lettre { font-size: clamp(2.2rem, 11vw, 3.5rem); padding-bottom: 20px; }
+
+      .keypad { gap: 8px; max-width: 260px; }
+      .key { padding: 12px; font-size: 1.3rem; }
+
+      .exo-btns { gap: 12px; }
+      .exo-btn  { width: 80px; height: 80px; font-size: 2.2rem; }
+
+      .op-btn { padding: 15px 18px; font-size: 1.15rem; }
+
+      .lu-btn, .replay-btn { padding: 14px 30px; font-size: 1.1rem; }
+
+      .result-emoji { font-size: 4rem; }
+      .star-row     { font-size: 3rem; }
+    }
+
     /* ===== MODE EXERCICE ===== */
     .op-btn.exo { background: linear-gradient(135deg, #6bff9e, #00e57a); color: #003320; }
 
@@ -542,9 +578,9 @@
     </div>
     <div class="lecture-card">
       <div class="lecture-legende">
-        <span><b style="color:var(--pink)">rose</b> / <b style="color:var(--blue)">bleu</b> = une syllabe</span>
-        <span><span class="leg-arc"></span> un seul son</span>
-        <span><span class="leg-muette"></span> lettre muette</span>
+        <span><b style="color:var(--pink)">rose</b>/<b style="color:var(--blue)">bleu</b> = syllabe</span>
+        <span><span class="leg-arc"></span> = un son</span>
+        <span><span class="leg-muette"></span> = muette</span>
       </div>
       <div id="mot-display" class="mot-display"></div>
       <button class="listen-btn" onclick="ecouterMot()">🔊 Écouter</button>
@@ -977,7 +1013,7 @@
     var seenNow  = getSeenKeys().length;
 
     document.getElementById('lec-progress').textContent =
-      'Mot ' + (lectureIdx + 1) + ' / ' + lectureMots.length + '  ·  ' + seenNow + ' / ' + MOTS.length + ' appris';
+      'Mot ' + (lectureIdx + 1) + '/' + lectureMots.length + ' · ' + seenNow + '/' + MOTS.length + ' 📚';
     document.getElementById('lecture-tip').textContent  = mot.i;
 
     const display = document.getElementById('mot-display');
