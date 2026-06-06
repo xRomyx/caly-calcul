@@ -577,6 +577,7 @@
     }
     .delete-btn:hover { background: rgba(255,107,179,0.3); }
     .empty-devoirs { color: rgba(255,255,255,0.35); text-align: center; padding: 16px; font-style: italic; }
+    #word-list { max-height: 45vh; overflow-y: auto; }
 
     /* Devoirs screen (Caly) */
     .devoir-mot {
@@ -1074,6 +1075,8 @@
     inp.focus();
     renderParentPanel();
     updateDevoirsButton();
+    var wl = document.getElementById('word-list');
+    if (wl) wl.scrollTop = wl.scrollHeight;
   }
 
   function supprimerDevoir(idx) {
