@@ -1109,10 +1109,9 @@
     document.getElementById('dev-progress').textContent =
       'Mot ' + (devoirsIdx + 1) + ' / ' + devoirsList.length;
     document.getElementById('dev-mot').textContent = d.word;
-    document.getElementById('dev-btn').textContent =
-      devoirsIdx < devoirsList.length - 1 ? 'Lu ! →' : 'Terminé ! 🎉';
-    // Prononce le mot en neerlandais apres un court delai
-    setTimeout(ecouterDevoir, 300);
+    var btn = document.getElementById('dev-btn');
+    btn.disabled = false;
+    btn.textContent = devoirsIdx < devoirsList.length - 1 ? 'Lu ! →' : 'Terminé ! 🎉';
   }
 
   function ecouterDevoir() {
@@ -1127,14 +1126,35 @@
   }
 
   function nextDevoir() {
-    confetti(12);
-    if (devoirsIdx < devoirsList.length - 1) {
-      devoirsIdx++;
-      afficherDevoir();
-    } else {
-      confetti(60);
-      goHome();
+    var d = devoirsList[devoirsIdx];
+    var isLast = devoirsIdx >= devoirsList.length - 1;
+    var btn = document.getElementById('dev-btn');
+    btn.disabled = true;
+
+    function passerSuivant() {
+      if (!isLast) {
+        devoirsIdx++;
+        afficherDevoir();
+      } else {
+        confetti(60);
+        goHome();
+      }
     }
+
+    if (!d || !window.speechSynthesis) {
+      passerSuivant();
+      return;
+    }
+
+    // Prononce le mot, puis passe au suivant
+    window.speechSynthesis.cancel();
+    var utt   = new SpeechSynthesisUtterance(d.word);
+    utt.lang  = 'nl-NL';
+    utt.rate  = 0.75;
+    utt.pitch = 1.0;
+    utt.onend = passerSuivant;
+    utt.onerror = passerSuivant;
+    window.speechSynthesis.speak(utt);
   }
 
   // ===== VOIX =====
