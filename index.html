@@ -477,6 +477,118 @@
       .star-row     { font-size: 3rem; }
     }
 
+    /* ===== DEVOIRS ===== */
+    .op-btn.dev { background: linear-gradient(135deg, #6be8ff, #0099cc); color: #002233; }
+    .parent-unlock {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.18);
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: color 0.2s;
+      letter-spacing: 1px;
+    }
+    .parent-unlock:hover { color: rgba(255,255,255,0.5); }
+
+    /* PIN */
+    .pin-dots { display: flex; gap: 18px; justify-content: center; }
+    .pin-dot {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 2.5px solid rgba(255,255,255,0.3);
+      transition: all 0.18s;
+    }
+    .pin-dot.filled { background: var(--purple); border-color: var(--purple); transform: scale(1.2); }
+    #pin-error { min-height: 30px; text-align: center; color: var(--pink); font-weight: 700; font-size: 1rem; }
+
+    /* Parent panel */
+    #parent-screen {
+      overflow-y: auto;
+      justify-content: flex-start;
+      gap: 14px;
+      padding-bottom: 30px;
+    }
+    .parent-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius);
+      padding: 20px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      backdrop-filter: blur(8px);
+    }
+    .parent-section-title {
+      font-size: 0.8rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .parent-input {
+      background: rgba(255,255,255,0.08);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 13px 16px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s;
+    }
+    .parent-input::placeholder { color: rgba(255,255,255,0.25); }
+    .parent-input:focus { border-color: var(--purple); }
+    .add-word-btn {
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      border: none; border-radius: 14px;
+      color: white;
+      font-family: 'Nunito', sans-serif;
+      font-size: 1rem; font-weight: 900;
+      padding: 13px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .add-word-btn:hover { transform: translateY(-2px); }
+    .word-item {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 14px;
+      gap: 10px;
+    }
+    .word-item-word { font-size: 1.2rem; font-weight: 900; color: white; }
+    .delete-btn {
+      background: rgba(255,107,179,0.12);
+      border: 1px solid rgba(255,107,179,0.3);
+      border-radius: 8px;
+      color: var(--pink);
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 7px 12px;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .delete-btn:hover { background: rgba(255,107,179,0.3); }
+    .empty-devoirs { color: rgba(255,255,255,0.35); text-align: center; padding: 16px; font-style: italic; }
+
+    /* Devoirs screen (Caly) */
+    .devoir-mot {
+      font-size: clamp(3rem, 15vw, 5.5rem);
+      font-weight: 900;
+      color: white;
+      text-align: center;
+      letter-spacing: 2px;
+      text-shadow: 0 0 30px rgba(107,232,255,0.4);
+      animation: slideInMot 0.35s ease;
+    }
+
     /* ===== MODE EXERCICE ===== */
     .op-btn.exo { background: linear-gradient(135deg, #6bff9e, #00e57a); color: #003320; }
 
@@ -553,7 +665,13 @@
         <span class="op-label">Exercice syllabes</span>
         <span class="op-sym">?</span>
       </button>
+      <button class="op-btn dev" id="devoirs-btn" onclick="startDevoirs()" style="display:none">
+        <span class="op-icon">📚</span>
+        <span class="op-label">Devoirs</span>
+        <span class="op-sym">NL</span>
+      </button>
     </div>
+    <button class="parent-unlock" onclick="ouvrirParent()">🔒 Espace parent</button>
   </div>
 
   <!-- Écran 2 : Jeu -->
@@ -623,6 +741,67 @@
     </div>
   </div>
 
+  <!-- Écran PIN -->
+  <div id="pin-screen" class="screen">
+    <div class="title" id="pin-title" style="font-size:1.8rem">Code parent 🔒</div>
+    <div class="pin-dots">
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+      <div class="pin-dot"></div>
+    </div>
+    <div id="pin-error"></div>
+    <div class="keypad">
+      <button class="key" onclick="pinPress('7')">7</button>
+      <button class="key" onclick="pinPress('8')">8</button>
+      <button class="key" onclick="pinPress('9')">9</button>
+      <button class="key" onclick="pinPress('4')">4</button>
+      <button class="key" onclick="pinPress('5')">5</button>
+      <button class="key" onclick="pinPress('6')">6</button>
+      <button class="key" onclick="pinPress('1')">1</button>
+      <button class="key" onclick="pinPress('2')">2</button>
+      <button class="key" onclick="pinPress('3')">3</button>
+      <button class="key" onclick="goHome()">✕</button>
+      <button class="key" onclick="pinPress('0')">0</button>
+      <button class="key del" onclick="pinDel()">⌫</button>
+    </div>
+  </div>
+
+  <!-- Écran Parent -->
+  <div id="parent-screen" class="screen">
+    <div class="score-bar">
+      <button class="back-btn" onclick="goHome()">← Retour</button>
+      <div style="color:white;font-weight:900;font-size:1rem">👨‍👩‍👧 Espace parent</div>
+    </div>
+    <div class="parent-card">
+      <div class="parent-section-title">Ajouter un mot</div>
+      <input id="new-word" class="parent-input" type="text" placeholder="Mot en néerlandais..."
+             onkeydown="if(event.key==='Enter') ajouterDevoir()" />
+      <button class="add-word-btn" onclick="ajouterDevoir()">+ Ajouter</button>
+    </div>
+    <div class="parent-card">
+      <div class="parent-section-title">Mots des devoirs</div>
+      <div id="word-list"></div>
+    </div>
+    <div class="parent-card" style="gap:8px">
+      <div class="parent-section-title">Sécurité</div>
+      <button class="back-btn" style="width:100%;text-align:center" onclick="changerCode()">🔑 Changer le code PIN</button>
+    </div>
+  </div>
+
+  <!-- Écran Devoirs (Caly) -->
+  <div id="devoirs-screen" class="screen">
+    <div class="score-bar">
+      <button class="back-btn" onclick="goHome()">← Retour</button>
+      <div id="dev-progress" class="lec-progress">Mot 1 / 5</div>
+    </div>
+    <div class="lecture-card" style="gap:28px">
+      <div id="dev-mot" class="devoir-mot"></div>
+      <button class="listen-btn" onclick="ecouterDevoir()">🔊 Écouter</button>
+      <button class="lu-btn" id="dev-btn" onclick="nextDevoir()">Lu ! →</button>
+    </div>
+  </div>
+
   <!-- Écran 3 : Résultat -->
   <div id="result-screen" class="screen">
     <div id="result-emoji" class="result-emoji"></div>
@@ -636,6 +815,9 @@
 </div>
 
 <script>
+  // Init
+  document.addEventListener('DOMContentLoaded', function() { updateDevoirsButton(); });
+
   // Étoiles de fond
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 120; i++) {
@@ -790,7 +972,7 @@
     else if (currentOp === 'lec') startLecture();
     else                          startGame(currentOp);
   }
-  function goHome()  { showScreen('home-screen'); }
+  function goHome()  { showScreen('home-screen'); updateDevoirsButton(); }
 
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -798,6 +980,159 @@
   }
 
   function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  // ===== ESPACE PARENT =====
+  var PIN_KEY     = 'caly-pin';
+  var DEVOIRS_KEY = 'caly-devoirs';
+  var pinBuffer   = '';
+  var pinMode     = 'access'; // 'access' ou 'change'
+
+  function getPin()      { return localStorage.getItem(PIN_KEY) || '1234'; }
+  function getDevoirs()  { try { return JSON.parse(localStorage.getItem(DEVOIRS_KEY) || '[]'); } catch(e) { return []; } }
+  function saveDevoirs(d){ localStorage.setItem(DEVOIRS_KEY, JSON.stringify(d)); }
+
+  function ouvrirParent() {
+    pinBuffer = ''; pinMode = 'access';
+    document.getElementById('pin-title').textContent = 'Code parent 🔒';
+    document.getElementById('pin-error').textContent = '';
+    renderPinDots();
+    showScreen('pin-screen');
+  }
+
+  function changerCode() {
+    pinBuffer = ''; pinMode = 'change';
+    document.getElementById('pin-title').textContent = 'Nouveau code 🔑';
+    document.getElementById('pin-error').textContent = 'Choisissez 4 chiffres';
+    renderPinDots();
+    showScreen('pin-screen');
+  }
+
+  function pinPress(d) {
+    if (pinBuffer.length >= 4) return;
+    pinBuffer += d;
+    renderPinDots();
+    if (pinBuffer.length === 4) setTimeout(validatePin, 250);
+  }
+
+  function pinDel() {
+    pinBuffer = pinBuffer.slice(0, -1);
+    renderPinDots();
+  }
+
+  function renderPinDots() {
+    document.querySelectorAll('.pin-dot').forEach(function(dot, i) {
+      dot.classList.toggle('filled', i < pinBuffer.length);
+    });
+  }
+
+  function validatePin() {
+    if (pinMode === 'access') {
+      if (pinBuffer === getPin()) {
+        renderParentPanel();
+        showScreen('parent-screen');
+      } else {
+        document.getElementById('pin-error').textContent = 'Code incorrect ❌';
+        speak('Code incorrect');
+        pinBuffer = '';
+        renderPinDots();
+      }
+    } else {
+      localStorage.setItem(PIN_KEY, pinBuffer);
+      document.getElementById('pin-error').textContent = '';
+      renderParentPanel();
+      showScreen('parent-screen');
+    }
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function renderParentPanel() {
+    var devoirs = getDevoirs();
+    var list    = document.getElementById('word-list');
+    if (devoirs.length === 0) {
+      list.innerHTML = '<div class="empty-devoirs">Aucun mot pour l\'instant</div>';
+      return;
+    }
+    list.innerHTML = devoirs.map(function(d, i) {
+      return '<div class="word-item">' +
+        '<span class="word-item-word">' + escHtml(d.word) + '</span>' +
+        '<button class="delete-btn" onclick="supprimerDevoir(' + i + ')">✕</button>' +
+      '</div>';
+    }).join('');
+  }
+
+  function ajouterDevoir() {
+    var inp  = document.getElementById('new-word');
+    var word = inp.value.trim();
+    if (!word) return;
+    var devoirs = getDevoirs();
+    devoirs.push({ word: word });
+    saveDevoirs(devoirs);
+    inp.value = '';
+    inp.focus();
+    renderParentPanel();
+    updateDevoirsButton();
+  }
+
+  function supprimerDevoir(idx) {
+    var devoirs = getDevoirs();
+    devoirs.splice(idx, 1);
+    saveDevoirs(devoirs);
+    renderParentPanel();
+    updateDevoirsButton();
+  }
+
+  function updateDevoirsButton() {
+    var btn = document.getElementById('devoirs-btn');
+    if (btn) btn.style.display = getDevoirs().length > 0 ? 'flex' : 'none';
+  }
+
+  // ===== DEVOIRS (côté Caly) =====
+  var devoirsIdx  = 0;
+  var devoirsList = [];
+
+  function startDevoirs() {
+    devoirsList = getDevoirs();
+    if (!devoirsList.length) return;
+    devoirsIdx = 0;
+    showScreen('devoirs-screen');
+    afficherDevoir();
+  }
+
+  function afficherDevoir() {
+    var d = devoirsList[devoirsIdx];
+    document.getElementById('dev-progress').textContent =
+      'Mot ' + (devoirsIdx + 1) + ' / ' + devoirsList.length;
+    document.getElementById('dev-mot').textContent = d.word;
+    document.getElementById('dev-btn').textContent =
+      devoirsIdx < devoirsList.length - 1 ? 'Lu ! →' : 'Terminé ! 🎉';
+    // Prononce le mot en neerlandais apres un court delai
+    setTimeout(ecouterDevoir, 300);
+  }
+
+  function ecouterDevoir() {
+    var d = devoirsList[devoirsIdx];
+    if (!d || !window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    var utt   = new SpeechSynthesisUtterance(d.word);
+    utt.lang  = 'nl-NL';
+    utt.rate  = 0.75;
+    utt.pitch = 1.0;
+    window.speechSynthesis.speak(utt);
+  }
+
+  function nextDevoir() {
+    confetti(12);
+    if (devoirsIdx < devoirsList.length - 1) {
+      devoirsIdx++;
+      afficherDevoir();
+    } else {
+      confetti(60);
+      goHome();
+    }
+  }
 
   // ===== VOIX =====
   function speak(text, rate) {
